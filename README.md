@@ -1,25 +1,26 @@
-# odoo-brazil-buildout
+# eSCE
 
-
-Passos para instalação do PostGresSQL
+## Instalação
+###Passos para instalação do PostGresSQL
 
 1º Instalando o Banco de Dados
-	apt-get install postgresql
-	service postgresql status
-	chown postgres /var/log/postgresql
-	sudo -i -u postgres
+
+    apt-get install postgresql
+    service postgresql status
+    chown postgres /var/log/postgresql
 
 2º Criando usuario
-	CREATE USER odoo SUPERUSER INHERIT CREATEDB CREATEROLE;
-	ALTER USER odoo PASSWORD 'odoo'; 
+
+    sudo su - postgres -c "psql postgres -c \
+    \"CREATE USER odoo SUPERUSER INHERIT CREATEDB CREATEROLE; \
+    ALTER USER odoo PASSWORD 'odoo';\""
 
 
-Passos para instalação do Odoo V12
-
+###Passos para instalação do Odoo V12
 
 1º Criar uma pasta vazia com permissão de escrita.
 
-	mkdir sce
+    mkdir sce
 
 2º Configurar um Virtual Env na pasta criada, 
 com permissão de acesso às bibliotecas do sistema:
@@ -30,25 +31,10 @@ com permissão de acesso às bibliotecas do sistema:
 
 	git clone git@gitlab.abgf.gov.br:e-sce/odoo12.git .
 
-4º Inatalar dependencias 
+4º Executando script de Instalação/Atualização
 
-	sudo apt-get install python3 python-dev python3-dev git mercurial virtualenv 
-	sudo apt-get install libsasl2-dev libldap2-dev libssl-dev
-	virtualenv -p python3 .
-
-5º Atualizar e/ou Instalar o buildout dentro da virtualenv
-
-	bin/pip install -U pip zc.buildout 
-	bin/pip install babel chardet
-
-5º Execute o buildout, para fazer o download do Odoo e suas dependencias
-
-	bin/buildout 
-
-6º Iniciando o Odoo
-	
-	bin/start_odoo
+	./init-buildout.sh
  
- 7º Enjoy!
+5º Enjoy!
  
  Mais informações veja a documentação oficial: https://github.com/anybox/anybox.recipe.odoo/
