@@ -19,44 +19,27 @@ Passos para instalação do Odoo V12
 
 1º Criar uma pasta vazia com permissão de escrita.
 
-	mkdir projeto12
+	mkdir sce
 
 2º Configurar um Virtual Env na pasta criada, 
 com permissão de acesso às bibliotecas do sistema:
 	
-	cd projeto12
+	cd sce
 
 3º Clonar repositório do github: 	
 
-	git clone https://github.com/odoo-brazil/odoo-brazil-buildout.git .
+	git clone git@gitlab.abgf.gov.br:e-sce/odoo12.git .
 
 4º Inatalar dependencias 
 
 	sudo apt-get install python3 python-dev python3-dev git mercurial virtualenv 
-
 	sudo apt-get install libsasl2-dev libldap2-dev libssl-dev
-
 	virtualenv -p python3 .
 
 5º Atualizar e/ou Instalar o buildout dentro da virtualenv
 
 	bin/pip install -U pip zc.buildout 
 	bin/pip install babel chardet
-
-6º Criar um arquivo chamado 'buildout.cfg' que irá extender o arquivo do common.cfg
-
-    [buildout]
-    extends = default.cfg
-    
-    [odoo]
-    options.db_password = odoo
-    options.db_user = odoo
-    options.admin_passwd = admin
-    options.db_host = localhost
-
-Setando outros parametros:
-
-    options.nome_parametro_no_arquivo_cfg = 4
 
 5º Execute o buildout, para fazer o download do Odoo e suas dependencias
 
