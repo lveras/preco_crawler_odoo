@@ -5,9 +5,9 @@
 
 1º Instalando o Banco de Dados
 
-    apt-get install postgresql
-    service postgresql status
-    chown postgres /var/log/postgresql
+    sudo apt-get install postgresql
+    sudo service postgresql status
+    sudo chown postgres /var/log/postgresql
 
 2º Criando usuario
 
