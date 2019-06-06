@@ -1,0 +1,41 @@
+version: '2'
+volumes:
+  demo_odoo_files:
+    external: true
+    driver: rancher-nfs
+  demo_postgres_volume_config:
+    external: true
+    driver: rancher-nfs
+  demo_postgres_volume_log:
+    external: true
+    driver: rancher-nfs
+  demo_postgres_volume_data:
+    external: true
+    driver: rancher-nfs
+services:
+  web:
+    image: gitlab.kmee.com.br:5043/odoo/produto:develop
+    stdin_open: true
+    volumes:
+    - demo_odoo_files:/opt/odoo/.local/share/Odoo
+    tty: true
+    links:
+    - postgres:db
+    labels:
+      traefik.port: '8069'
+      traefik.domain: dev.kmee.online
+      traefik.enable: stack
+      io.rancher.container.pull_image: always
+  postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_USER: odoo
+    stdin_open: true
+    volumes:
+    - demo_postgres_volume_config:/etc/postgresql-common/
+    - demo_postgres_volume_log:/var/log/postgresql/
+    - demo_postgres_volume_data:/var/lib/postgresql/data/
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always

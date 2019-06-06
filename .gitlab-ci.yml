@@ -1,0 +1,58 @@
+variables:
+  DOCKER_DRIVER: overlay
+
+image: docker:latest
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  - deploy
+
+build-master:
+  stage: build
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build -t "$CI_REGISTRY_IMAGE" .
+    - docker push "$CI_REGISTRY_IMAGE"
+  only:
+    - master
+
+build:
+  stage: build
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --no-cache -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+  except:
+    - master
+
+deploy-master:
+  stage: deploy
+  image: cdrx/rancher-gitlab-deploy
+  script:
+    - upgrade --environment dev --stack producao --service web
+  when: manual
+  only:
+    - printenv
+    - master
+
+##deploy:
+##  stage: deploy
+##  image: cdrx/rancher-gitlab-deploy
+##  script:
+##    - printenv
+##    - upgrade --environment dev --stack produto --service web
+    
+deploy-demo:
+  stage: deploy
+  image: cdrx/rancher-gitlab-deploy
+  script:
+    - printenv
+    - upgrade --environment dev --stack demo --service web
+  when: manual
+  only:
+    - develop
