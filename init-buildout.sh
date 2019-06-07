@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -e -x
 echo "----> Instalando dependências"
-sudo apt-get install python3 python-dev python3-dev postgresql
+sudo apt-get -y install python3 python3-dev python3-pip mercurial python3-psycopg2 libpq-dev build-essential autoconf libtool pkg-config python3-opengl python-imaging python-pyrex python-pyside.qtopengl qt4-dev-tools qt4-designer libqtgui4 libqtcore4 libqt4-xml libqt4-test libqt4-script libqt4-network libqt4-dbus python-qt4 python-qt4-gl libgle3 libssl-dev libsasl2-dev libldap2-dev
 echo "----> Instalando dependências"
+sudo pip3 install virtualenv
 virtualenv -p python3 .
 bin/pip install -U zc.buildout pip
 echo "----> Executando buildout"
