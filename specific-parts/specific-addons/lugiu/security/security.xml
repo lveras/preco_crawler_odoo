@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Categoria/Grupo de funcionários ABGF -->
+        <record model="ir.module.category" id="module_nosso_grupo">
+            <field name="name">Nosso grupo</field>
+            <field name="description">Nosso grupo, porra!</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="nosso_grupo" model="res.groups">
+            <field name="name">É nos!</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="module_nosso_grupo"/>
+        </record>
+    </data>
+</odoo>

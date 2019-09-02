@@ -23,6 +23,7 @@
         'views/marca.xml',
         'views/busca.xml',
         'views/menu.xml',
+        'security/security.xml',
     ],
     'application': True,
 }
