@@ -26,6 +26,8 @@
                         <field name="name" required="1" />
                         <field name="quantidade" />
                         <field name="importancia" />
+                        <field name="valor_estimado" />
+                        <field name="total_estimado" />
                     </group>
                     <separator string="Produtos" />
                     <field name="produto_ids">

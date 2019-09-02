@@ -4,7 +4,7 @@ from odoo import models, fields, api
 IMPORTANCIA = [('indispensavel', 'Indispensável'),
                ('bomter', 'É bom ter'),
                ('perfumaria', 'Perfumaria'),
-               ('umdia', 'Um dia, e talvez esse dia nunca chegue...'),]
+               ('umdia', 'Um dia, e talvez esse dia nunca chegue...'), ]
 
 
 class Item(models.Model):
@@ -37,3 +37,16 @@ class Item(models.Model):
         default='indispensavel',
         string='Importância',
     )
+
+    valor_estimado = fields.Float(
+        string='Valor estimado(und)',
+    )
+
+    total_estimado = fields.Float(
+        string='Total estimado',
+        compute='_compute_total_estimado',
+    )
+
+    @api.depends('quantidade', 'valor_estimado')
+    def _compute_total_estimado(self):
+        self.total_estimado = self.valor_estimado*self.quantidade
