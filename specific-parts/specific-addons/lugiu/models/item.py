@@ -22,6 +22,7 @@ class Item(models.Model):
     state = fields.Selection(
         string='Status',
         selection=STATE,
+        compute='_compute_valor_pg',
     )
 
     comodo_id = fields.Many2one(
@@ -61,6 +62,7 @@ class Item(models.Model):
             vl_vencedor = rec.produto_ids.filtered(
                 lambda x: x.comprado is True).mapped('melhor_preco')
             rec.valor_pg = vl_vencedor*rec.quantidade or 0.0
+            rec.state = 'comprado' if vl_vencedor else 'pesquisando'
 
     total_estimado = fields.Float(
         string='Total estimado',

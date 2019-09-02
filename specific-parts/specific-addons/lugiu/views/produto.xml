@@ -11,6 +11,7 @@
                 <field name="marca_id" />
                 <field name="importancia" />
                 <field name="melhor_preco" />
+                <field name="comprado" />
             </tree>
         </field>
     </record>
@@ -22,6 +23,9 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <group>
+                        <field name="comprado" />
+                    </group>
                     <group col="4" colspan="4" string="Produto">
                         <field name="item_id" required="1" />
                         <field name="marca_id" required="1" />
