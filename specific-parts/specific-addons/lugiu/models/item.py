@@ -57,9 +57,10 @@ class Item(models.Model):
 
     @api.depends('quantidade', 'produto_ids')
     def _compute_valor_pg(self):
-        vl_vencedor = self.produto_ids.filtered(
-            lambda x: x.comprado is True).mapped('melhor_preco')
-        self.valor_pg = vl_vencedor*self.quantidade or 0.0
+        for rec in self:
+            vl_vencedor = rec.produto_ids.filtered(
+                lambda x: x.comprado is True).mapped('melhor_preco')
+            rec.valor_pg = vl_vencedor*rec.quantidade or 0.0
 
     total_estimado = fields.Float(
         string='Total estimado',
