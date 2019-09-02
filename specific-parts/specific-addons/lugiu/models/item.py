@@ -60,8 +60,8 @@ class Item(models.Model):
     def _compute_valor_pg(self):
         for rec in self:
             vl_vencedor = rec.produto_ids.filtered(
-                lambda x: x.comprado is True).mapped('melhor_preco')[0] or None
-            rec.valor_pg = vl_vencedor*rec.quantidade if vl_vencedor else 0.0
+                lambda x: x.comprado is True).mapped('melhor_preco')
+            rec.valor_pg = vl_vencedor[0]*rec.quantidade if vl_vencedor else 0.0
             rec.state = 'comprado' if vl_vencedor else 'pesquisando'
 
     total_estimado = fields.Float(
