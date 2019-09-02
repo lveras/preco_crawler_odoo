@@ -20,14 +20,15 @@
                 <sheet>
                     <group string="Comodo">
                         <field name="name" required="1" />
-                        <field name="item_ids" widget="one2many_tags">
-                            <tree editable="botton">
-                                <field name="name" />
-                                <field name="quantidade" />
-                                <field name="importancia" />
-                            </tree>
-                        </field>
                     </group>
+                    <separator string="Itens" />
+                    <field name="item_ids" widget="one2many_tags">
+                        <tree editable="botton">
+                            <field name="name" />
+                            <field name="quantidade" />
+                            <field name="importancia" />
+                        </tree>
+                    </field>
                 </sheet>
             </form>
         </field>

@@ -9,7 +9,7 @@
         </record>
 
         <record id="nosso_grupo" model="res.groups">
-            <field name="name">É nos!</field>
+            <field name="name">Nos</field>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
             <field name="category_id" ref="module_nosso_grupo"/>
         </record>

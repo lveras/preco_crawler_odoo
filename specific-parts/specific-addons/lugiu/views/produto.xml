@@ -23,13 +23,12 @@
                 <sheet>
                     <group col="4" colspan="4" string="Produto">
                         <field name="item_id" required="1" />
-                        <field name="name" required="1" />
                         <field name="marca_id" required="1" />
+                        <field name="name" required="1" />
                         <field name="importancia" required="1" />
                     </group>
-                    <group>
-                        <field name="busca_ids" />
-                    </group>
+                    <separator string="Buscas" />
+                    <field name="busca_ids" readonly="1" />
                 </sheet>
             </form>
         </field>

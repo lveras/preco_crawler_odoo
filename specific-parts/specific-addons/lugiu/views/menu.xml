@@ -34,11 +34,4 @@
           action="marca_action"
           parent="cadastro_menu"
           sequence="40"/>
-
-    <menuitem id="busca_sub_menu"
-          name="Busca"
-          action="busca_action"
-          parent="cadastro_menu"
-          sequence="50"/>
-
 </odoo>
