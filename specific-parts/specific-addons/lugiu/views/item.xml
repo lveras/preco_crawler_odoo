@@ -28,6 +28,7 @@
                         <field name="importancia" />
                         <field name="valor_estimado" />
                         <field name="total_estimado" />
+                        <field name="total_estimado" />
                     </group>
                     <separator string="Produtos" />
                     <field name="produto_ids">

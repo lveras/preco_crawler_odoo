@@ -59,7 +59,7 @@ class Item(models.Model):
     def _compute_valor_pg(self):
         vl_vencedor = self.produto_ids.filtered(
             lambda x: x.comprado is True).mapped('melhor_preco')
-        self.valor_pg = vl_vencedor or 0.0
+        self.valor_pg = vl_vencedor*self.quantidade or 0.0
 
     total_estimado = fields.Float(
         string='Total estimado',
