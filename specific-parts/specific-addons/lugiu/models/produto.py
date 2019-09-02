@@ -46,6 +46,10 @@ class Produto(models.Model):
         string='Importância',
     )
 
+    @api.multi
+    def btn_comprado(self):
+        self.comprado = False if self.comprado is True else True
+
 
 class Marca(models.Model):
     _name = 'marca'

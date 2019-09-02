@@ -24,10 +24,10 @@
             <form>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button class="oe_stat_button" icon="fa-gavel" style="width: 173px !important">
+                        <button name="btn_comprado" type="object" class="oe_stat_button" icon="fa-gavel" style="width: 173px !important">
                             <field name="comprado" widget="boolean_button"
                             options='{"terminology": {"string_true": "Comprado, Porra!",
-                            "string_false": "Ainda não", }}' />
+                            "string_false": "Calma jovem...", }}' />
                         </button>
                     </div>
                     <group col="4" colspan="4" string="Produto">
