@@ -6,6 +6,9 @@ IMPORTANCIA = [('indispensavel', 'Indispensável'),
                ('perfumaria', 'Perfumaria'),
                ('umdia', 'Um dia, e talvez esse dia nunca chegue...'), ]
 
+STATE = [('pesquisando', 'Pesquisando'),
+         ('comprado', 'Comprado'), ]
+
 
 class Item(models.Model):
     _name = "item"
@@ -14,6 +17,11 @@ class Item(models.Model):
     name = fields.Char(
         string='Nome',
         requered=True,
+    )
+
+    state = fields.Selection(
+        string='Status',
+        selection=STATE,
     )
 
     comodo_id = fields.Many2one(
@@ -41,6 +49,17 @@ class Item(models.Model):
     valor_estimado = fields.Float(
         string='Valor estimado(und)',
     )
+
+    valor_pg = fields.Float(
+        string='Valor pago',
+        compute='_compute_valor_pg',
+    )
+
+    @api.depends('quantidade', 'produto_ids')
+    def _compute_valor_pg(self):
+        vl_vencedor = self.produto_ids.filtered(
+            lambda x: x.comprado is True).mapped('melhor_preco')
+        self.valor_pg = vl_vencedor or 0.0
 
     total_estimado = fields.Float(
         string='Total estimado',

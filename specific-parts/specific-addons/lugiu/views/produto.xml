@@ -10,6 +10,7 @@
                 <field name="item_id" />
                 <field name="marca_id" />
                 <field name="importancia" />
+                <field name="melhor_preco" />
             </tree>
         </field>
     </record>
@@ -26,6 +27,7 @@
                         <field name="marca_id" required="1" />
                         <field name="name" required="1" />
                         <field name="importancia" required="1" />
+                        <field name="melhor_preco" />
                     </group>
                     <separator string="Buscas" />
                     <field name="busca_ids" readonly="1" />

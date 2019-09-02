@@ -11,6 +11,14 @@ class Produto(models.Model):
          'unique(item_id, importancia)',
          'Já existe item com essa importância, ô mané!')]
 
+    comprado = fields.Boolean(
+        string='Comprado'
+    )
+
+    melhor_preco = fields.Float(
+        string='Melhor preço encontrado',
+    )
+
     name = fields.Char(
         string='Nome',
     )
