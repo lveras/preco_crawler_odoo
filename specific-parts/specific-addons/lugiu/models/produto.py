@@ -12,7 +12,8 @@ class Produto(models.Model):
          'Já existe item com essa importância, ô mané!')]
 
     comprado = fields.Boolean(
-        string='Comprado'
+        string='Comprado',
+        default=False,
     )
 
     melhor_preco = fields.Float(
