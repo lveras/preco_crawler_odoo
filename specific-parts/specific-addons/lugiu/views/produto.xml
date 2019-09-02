@@ -23,6 +23,12 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-gavel" style="width: 173px !important">
+                            <field name="active" widget="boolean_button" />
+                        </button>
+                    </div>
+
                     <group>
                         <field name="comprado" />
                     </group>
