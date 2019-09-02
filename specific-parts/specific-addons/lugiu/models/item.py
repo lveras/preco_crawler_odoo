@@ -29,6 +29,7 @@ class Item(models.Model):
 
     quantidade = fields.Integer(
         string='Quantidade',
+        default=1,
     )
 
     importancia = fields.Selection(
