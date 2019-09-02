@@ -33,5 +33,6 @@ class Item(models.Model):
 
     importancia = fields.Selection(
         selection=IMPORTANCIA,
+        default='indispensavel',
         string='Importância',
     )
