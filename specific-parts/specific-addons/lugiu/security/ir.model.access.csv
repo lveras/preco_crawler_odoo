@@ -1,1 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+id_grupo_admin_comodo,id_grupo_admin_comodo,model_comodo,base.group_system,1,1,1,1
+id_grupo_admin_item,id_grupo_admin_item,model_item,base.group_system,1,1,1,1
+id_grupo_admin_produto,id_grupo_admin_produto,model_produto,base.group_system,1,1,1,1
+id_grupo_admin_busca,id_grupo_admin_busca,model_busca,base.group_system,1,1,1,1
+id_grupo_admin_marca,id_grupo_admin_marca,model_marca,base.group_system,1,1,1,1

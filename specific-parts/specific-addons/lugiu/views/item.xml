@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
-                <field name="comodo" />
+                <field name="comodo_id" />
                 <field name="quantidade" />
                 <field name="importancia" />
             </tree>
@@ -34,7 +34,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="item_action">
-       <field name="name">item Action</field>
+       <field name="name">Item</field>
        <field name="res_model">item</field>
        <field name="view_mode">tree,form</field>
        <field name="view_id" ref="item_view_tree"/>

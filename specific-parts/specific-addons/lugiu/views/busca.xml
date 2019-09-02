@@ -31,7 +31,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="busca_action">
-       <field name="name">busca Action</field>
+       <field name="name">Busca</field>
        <field name="res_model">busca</field>
        <field name="view_mode">tree,form</field>
        <field name="view_id" ref="busca_view_tree"/>

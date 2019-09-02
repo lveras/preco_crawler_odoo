@@ -6,9 +6,7 @@
         <field name="priority">16</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="produto_id" />
-                <field name="preco" />
-                <field name="url" />
+                <field name="name" />
             </tree>
         </field>
     </record>
@@ -30,7 +28,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="marca_action">
-       <field name="name">marca Action</field>
+       <field name="name">Marca</field>
        <field name="res_model">marca</field>
        <field name="view_mode">tree,form</field>
        <field name="view_id" ref="marca_view_tree"/>

@@ -2,7 +2,7 @@
 <odoo>
     <!-- menu principal -->
     <menuitem id="main_menu"
-          name="LU S2 GIU <3"
+          name="LUGIU"
           sequence="7"/>
 
     <!-- menu de cadastro -->

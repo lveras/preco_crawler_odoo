@@ -3,7 +3,7 @@ from odoo import models, fields, api
 
 
 class Busca(models.Model):
-    _inherit = "busca"
+    _name = "busca"
 
     produto_id = fields.Char(
         string='Produto',

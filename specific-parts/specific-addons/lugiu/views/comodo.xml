@@ -28,7 +28,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="comodo_action">
-       <field name="name">Comodo Action</field>
+       <field name="name">Comodo</field>
        <field name="res_model">comodo</field>
        <field name="view_mode">tree,form</field>
        <field name="view_id" ref="comodo_view_tree"/>
