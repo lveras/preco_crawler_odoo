@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+     <record id="busca_view_tree" model="ir.ui.view">
+        <field name="name">busca.view.tree</field>
+        <field name="model">busca</field>
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="produto_id" />
+                <field name="preco" />
+                <field name="url" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="busca_view_form" model="ir.ui.view">
+        <field name="name">busca.view.form</field>
+        <field name="model">busca</field>
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="busca">
+                        <field name="produto_id" />
+                        <field name="preco" />
+                        <field name="url" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="busca_action">
+       <field name="name">busca Action</field>
+       <field name="res_model">busca</field>
+       <field name="view_mode">tree,form</field>
+       <field name="view_id" ref="busca_view_tree"/>
+       <field name="view_ids" eval="[(5, 0, 0),
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('busca_view_tree')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('busca_view_form')})]"/>
+   </record>
+</odoo>

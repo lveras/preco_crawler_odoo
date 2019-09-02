@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- menu principal -->
+    <menuitem id="main_menu"
+          name="LU S2 GIU <3"
+          sequence="7"/>
+
+    <!-- menu de cadastro -->
+    <menuitem id="cadastro_menu"
+          name="Cadastro"
+          parent="main_menu"
+          sequence="10"/>
+
+    <menuitem id="comodo_sub_menu"
+          name="Comodo"
+          action="comodo_action"
+          parent="cadastro_menu"
+          sequence="10"/>
+
+    <menuitem id="item_sub_menu"
+          name="Item"
+          action="item_action"
+          parent="cadastro_menu"
+          sequence="20"/>
+
+    <menuitem id="produto_sub_menu"
+          name="Produto"
+          action="produto_action"
+          parent="cadastro_menu"
+          sequence="30"/>
+
+    <menuitem id="marca_sub_menu"
+          name="Marca"
+          action="marca_action"
+          parent="cadastro_menu"
+          sequence="40"/>
+
+    <menuitem id="busca_sub_menu"
+          name="Busca"
+          action="busca_action"
+          parent="cadastro_menu"
+          sequence="50"/>
+
+</odoo>

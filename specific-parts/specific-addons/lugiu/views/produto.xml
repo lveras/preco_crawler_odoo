@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+     <record id="produto_view_tree" model="ir.ui.view">
+        <field name="name">produto.view.tree</field>
+        <field name="model">produto</field>
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="produto_view_form" model="ir.ui.view">
+        <field name="name">produto.view.form</field>
+        <field name="model">produto</field>
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="produto">
+                        <field name="item_id" required="1" />
+                        <field name="name" required="1" />
+                        <field name="marca_id" required="1" />
+                        <field name="importancia" required="1" />
+                        <field name="busca_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="produto_action">
+       <field name="name">produto Action</field>
+       <field name="res_model">produto</field>
+       <field name="view_mode">tree,form</field>
+       <field name="view_id" ref="produto_view_tree"/>
+       <field name="view_ids" eval="[(5, 0, 0),
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('produto_view_tree')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('produto_view_form')})]"/>
+   </record>
+</odoo>
