@@ -33,13 +33,13 @@ class Produto(models.Model):
 
     importancia = fields.Selection(
         selection=[('1', '1'), ('2', '2'), ('3', '3'),
-                   ('5', '5'), ('5', '5')],
+                   ('4', '4'), ('5', '5')],
         string='Importância',
     )
 
 
 class Marca(models.Model):
-    _name='marca'
+    _name = 'marca'
 
     name = fields.Char(
         string='Nome',

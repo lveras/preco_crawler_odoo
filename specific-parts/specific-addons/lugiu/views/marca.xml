@@ -20,7 +20,14 @@
                 <sheet>
                     <group string="Marca">
                         <field name="name" />
-                        <field name="produto_ids" />
+                        <field name="produto_ids">
+                            <tree editable="botton">
+                                <field name="item_id" />
+                                <field name="name" />
+                                <field name="marca_id" />
+                                <field name="importancia" />
+                            </tree>
+                        </field>
                     </group>
                 </sheet>
             </form>
