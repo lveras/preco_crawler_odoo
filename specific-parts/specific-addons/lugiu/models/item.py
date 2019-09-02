@@ -61,7 +61,7 @@ class Item(models.Model):
         for rec in self:
             vl_vencedor = rec.produto_ids.filtered(
                 lambda x: x.comprado is True).mapped('melhor_preco')
-            rec.valor_pg = vl_vencedor*rec.quantidade or 0.0
+            rec.valor_pg = vl_vencedor*rec.quantidade if vl_vencedor else 0.0
             rec.state = 'comprado' if vl_vencedor else 'pesquisando'
 
     total_estimado = fields.Float(
