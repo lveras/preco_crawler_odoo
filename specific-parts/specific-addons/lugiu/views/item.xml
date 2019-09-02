@@ -10,6 +10,9 @@
                 <field name="comodo_id" />
                 <field name="quantidade" />
                 <field name="importancia" />
+                <field name="valor_estimado" />
+                <field name="total_estimado" sum="Total Estimado Geral" />
+                <field name="valor_pg" sum="Total PG" />
             </tree>
         </field>
     </record>
