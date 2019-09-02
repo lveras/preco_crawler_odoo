@@ -49,4 +49,5 @@ class Item(models.Model):
 
     @api.depends('quantidade', 'valor_estimado')
     def _compute_total_estimado(self):
-        self.total_estimado = self.valor_estimado*self.quantidade
+        for rec in self:
+            rec.total_estimado = rec.valor_estimado*rec.quantidade
