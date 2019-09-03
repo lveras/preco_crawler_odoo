@@ -23,16 +23,20 @@
                     </group>
                     <separator string="Status" />
                     <group col="8" colspan="8">
-                        <field name="indispensavel_porcent" nolabel="1" widget="gauge" style="height: 100px;" />
+                        <field name="indispensavel_pg" nolabel="1" widget="gauge" style="height: 100px;"
+                        options="{'max_field': 'indispensavel_total'}" />
                         <field name="indispensavel_total" nolabel="1" />
 
-                        <field name="bomter_porcent" nolabel="1" widget="gauge" style="height: 100px;" />
+                        <field name="bomter_pg" nolabel="1" widget="gauge" style="height: 100px;" 
+                        options="{'max_field': 'bomter_total'}" />
                         <field name="bomter_total" nolabel="1" />
 
-                        <field name="perfumaria_porcent" nolabel="1" widget="gauge" style="height: 100px;" />
+                        <field name="perfumaria_pg" nolabel="1" widget="gauge" style="height: 100px;"
+                        options="{'max_field': 'perfumaria_total'}" />
                         <field name="perfumaria_total" nolabel="1" />
 
-                        <field name="umdia_porcent" nolabel="1" widget="gauge" style="height: 100px;" />
+                        <field name="umdia_pg" nolabel="1" widget="gauge" style="height: 100px;" 
+                        options="{'max_field': 'umdia_total'}" />
                         <field name="umdia_total" nolabel="1" />
                     </group>
                     <separator string="Itens" />
