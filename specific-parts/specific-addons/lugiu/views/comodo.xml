@@ -22,15 +22,18 @@
                         <field name="name" required="1" />
                     </group>
                     <separator string="Status" />
-                    <group col="4" colspan="4">
-                        <field name="indispensavel_total" />
-                        <field name="indispensavel_porcent" nolabel="1" widget="progressbar" />
-                        <field name="bomter_total" />
-                        <field name="bomter_porcent" nolabel="1" widget="progressbar" />
-                        <field name="perfumaria_total" />
-                        <field name="perfumaria_porcent" nolabel="1" widget="progressbar" />
-                        <field name="umdia_total" />
-                        <field name="umdia_porcent" nolabel="1" widget="progressbar" />
+                    <group col="8" colspan="8">
+                        <field name="indispensavel_porcent" nolabel="1" widget="gauge" style="height: 100px;" />
+                        <field name="indispensavel_total" nolabel="1" />
+
+                        <field name="bomter_porcent" nolabel="1" widget="gauge" style="height: 100px;" />
+                        <field name="bomter_total" nolabel="1" />
+
+                        <field name="perfumaria_porcent" nolabel="1" widget="gauge" style="height: 100px;" />
+                        <field name="perfumaria_total" nolabel="1" />
+
+                        <field name="umdia_porcent" nolabel="1" widget="gauge" style="height: 100px;" />
+                        <field name="umdia_total" nolabel="1" />
                     </group>
                     <separator string="Itens" />
                     <field name="item_ids" widget="one2many_tags">

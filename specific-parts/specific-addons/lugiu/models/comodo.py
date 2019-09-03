@@ -12,42 +12,42 @@ class Comodo(models.Model):
     )
 
     indispensavel_total = fields.Float(
-        string='Total - Indispensável',
+        string='Indispensável',
         compute='_compute_indices',
     )
 
     indispensavel_porcent = fields.Float(
-        string='Progresso',
+        string='Indispensável',
         compute='_compute_indices',
     )
 
     bomter_total = fields.Float(
-        string='Total - Bom ter',
+        string='Bom ter',
         compute='_compute_indices',
     )
 
     bomter_porcent = fields.Float(
-        string='Progresso',
+        string='Bom ter',
         compute='_compute_indices',
     )
 
     perfumaria_total = fields.Float(
-        string='Total - Perfumaria',
+        string='Perfumaria',
         compute='_compute_indices',
     )
 
     perfumaria_porcent = fields.Float(
-        string='Progresso',
+        string='Perfumaria',
         compute='_compute_indices',
     )
 
     umdia_total = fields.Float(
-        string='Total - Talvez nunca chegue',
+        string='Talvez nunca chegue',
         compute='_compute_indices',
     )
 
     umdia_porcent = fields.Float(
-        string='Progresso',
+        string='Talvez nunca chegue',
         compute='_compute_indices',
     )
 
@@ -60,15 +60,14 @@ class Comodo(models.Model):
     @api.depends('item_ids')
     def _compute_indices(self):
         importancias = ['indispensavel', 'bomter', 'perfumaria', 'umdia']
-        res = {importancia: {'total': 0, 'percent': 0}
-               for importancia in importancias}
 
         for importancia in importancias:
             total = sum(self.item_ids.filtered(
                 lambda x: x.importancia == importancia).mapped(
                 'valor_estimado'))
+
             pg = sum(self.item_ids.filtered(
-            lambda x: x.importancia == importancia).mapped('valor_pg'))
+                lambda x: x.importancia == importancia).mapped('valor_pg'))
 
             percent = (pg * 100) / total if total else 0
 
