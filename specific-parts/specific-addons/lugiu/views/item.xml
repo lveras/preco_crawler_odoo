@@ -31,6 +31,7 @@
                         <field name="comodo_id" required="1" />
                         <field name="name" required="1" />
                         <field name="quantidade" />
+                        <field name="quant_faltante" />
                         <field name="importancia" />
                         <field name="valor_estimado" />
                         <field name="total_estimado" />

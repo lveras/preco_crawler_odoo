@@ -17,7 +17,7 @@ class Produto(models.Model):
     )
 
     melhor_preco = fields.Float(
-        string='Melhor preço encontrado',
+        string='Melhor preço encontrado(und)',
     )
 
     name = fields.Char(
@@ -40,11 +40,31 @@ class Produto(models.Model):
         string='Marca',
     )
 
+    quantidade = fields.Integer(
+        string='Quantidade',
+        default=1,
+    )
+
     importancia = fields.Selection(
         selection=[('1', '1'), ('2', '2'), ('3', '3'),
                    ('4', '4'), ('5', '5')],
         string='Importância',
     )
+
+    total_preco = fields.Float(
+        string='Valor total',
+        compute='_compute_melhor_preco',
+
+    )
+
+    valor_frete = fields.Float(
+        string='Valor do Frete',
+    )
+
+    @api.depends('quantidade', 'melhor_preco', 'valor_frete')
+    def _compute_melhor_preco(self):
+        self.total_preco = (self.quantidade*self.melhor_preco) +\
+                           self.valor_frete
 
     @api.multi
     def btn_comprado(self):

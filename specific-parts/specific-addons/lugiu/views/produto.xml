@@ -37,7 +37,10 @@
                         <field name="marca_id" required="1" />
                         <field name="name" required="1" />
                         <field name="importancia" required="1" />
+                        <field name="quantidade" attrs="{'required': [('comprado', '=', True)]}" />
                         <field name="melhor_preco" />
+                        <field name="valor_frete" />
+                        <field name="total_preco" />
                     </group>
                     <separator string="Buscas" />
                     <field name="busca_ids" readonly="1" />

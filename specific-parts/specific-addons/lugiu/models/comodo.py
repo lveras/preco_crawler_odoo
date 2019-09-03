@@ -60,14 +60,15 @@ class Comodo(models.Model):
     @api.depends('item_ids')
     def _compute_indices(self):
         importancias = ['indispensavel', 'bomter', 'perfumaria', 'umdia']
+        for rec in self:
+            for importancia in importancias:
+                item_ids = rec.item_ids.filtered(
+                    lambda x: x.importancia == importancia)
+                total = sum([item.valor_pg if item.state == 'comprado' else
+                             item.total_estimado for item in item_ids])
 
-        for importancia in importancias:
-            total = sum(self.item_ids.filtered(
-                lambda x: x.importancia == importancia).mapped(
-                'valor_estimado'))
+                pg = sum(rec.item_ids.filtered(
+                    lambda x: x.importancia == importancia).mapped('valor_pg'))
 
-            pg = sum(self.item_ids.filtered(
-                lambda x: x.importancia == importancia).mapped('valor_pg'))
-
-            setattr(self, '{}_{}'.format(importancia, 'total'), total)
-            setattr(self, '{}_{}'.format(importancia, 'pg'), pg or 1)
+                setattr(rec, '{}_{}'.format(importancia, 'total'), total)
+                setattr(rec, '{}_{}'.format(importancia, 'pg'), pg or 1)

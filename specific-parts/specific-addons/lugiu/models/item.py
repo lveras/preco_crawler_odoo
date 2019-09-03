@@ -41,6 +41,11 @@ class Item(models.Model):
         default=1,
     )
 
+    quant_faltante = fields.Integer(
+        string='Faltam comprar',
+        compute='_compute_valor_pg',
+    )
+
     importancia = fields.Selection(
         selection=IMPORTANCIA,
         default='indispensavel',
@@ -59,10 +64,13 @@ class Item(models.Model):
     @api.depends('quantidade', 'produto_ids')
     def _compute_valor_pg(self):
         for rec in self:
-            vl_vencedor = rec.produto_ids.filtered(
-                lambda x: x.comprado is True).mapped('melhor_preco')
-            rec.valor_pg = vl_vencedor[0]*rec.quantidade if vl_vencedor else 0.0
-            rec.state = 'comprado' if vl_vencedor else 'pesquisando'
+            prod_id = rec.produto_ids.filtered(lambda x: x.comprado is True)
+            vl_venc = prod_id.melhor_preco
+            quant_comprada = prod_id.quantidade
+            rec.valor_pg = vl_venc*quant_comprada if vl_venc else 0.0
+            rec.quant_faltante = rec.quantidade - quant_comprada
+            rec.state = 'comprado' if rec.quant_faltante == 0 \
+                else 'pesquisando'
 
     total_estimado = fields.Float(
         string='Total estimado',
