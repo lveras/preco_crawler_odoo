@@ -22,18 +22,12 @@ class Item(models.Model):
     state = fields.Selection(
         string='Status',
         selection=STATE,
-        compute='_compute_valor_pg',
+        default='pesquisando',
     )
 
     comodo_id = fields.Many2one(
         comodel_name='comodo',
         string='Comodo',
-    )
-
-    produto_ids = fields.One2many(
-        comodel_name='produto',
-        inverse_name='item_id',
-        string='Itens',
     )
 
     quantidade = fields.Integer(
@@ -43,7 +37,6 @@ class Item(models.Model):
 
     quant_faltante = fields.Integer(
         string='Faltam comprar',
-        compute='_compute_valor_pg',
     )
 
     importancia = fields.Selection(
@@ -58,19 +51,19 @@ class Item(models.Model):
 
     valor_pg = fields.Float(
         string='Valor pago',
-        compute='_compute_valor_pg',
     )
 
-    @api.depends('quantidade', 'produto_ids')
-    def _compute_valor_pg(self):
-        for rec in self:
-            prod_id = rec.produto_ids.filtered(lambda x: x.comprado is True)
-            vl_venc = prod_id.melhor_preco
-            quant_comprada = prod_id.quantidade
-            rec.valor_pg = vl_venc*quant_comprada if vl_venc else 0.0
-            rec.quant_faltante = rec.quantidade - quant_comprada
-            rec.state = 'comprado' if rec.quant_faltante == 0 \
-                else 'pesquisando'
+    caracteristica_item_ids = fields.One2many(
+        comodel_name='caracteristica.item',
+        inverse_name='item_id',
+        string='Caracteristicas',
+    )
+
+    busca_ids = fields.One2many(
+        comodel_name='busca',
+        inverse_name='item_id',
+        string='Buscas',
+    )
 
     total_estimado = fields.Float(
         string='Total estimado',

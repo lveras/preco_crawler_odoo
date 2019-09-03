@@ -24,34 +24,44 @@
             <form>
                 <sheet>
                     <header>
-                        <field name="state" widget="statusbar" />
+                        <field name="state" widget="statusbar" clickable="True" />
                     </header>
                     <br />
                     <h1>
                         <field name="name" nolabel="1" required="1" />
                     </h1>
-                    <group col="4" colspan="4">
-                        <field name="comodo_id" col="4" colspan="4" required="1" />
-                        <field name="quantidade" />
-                        <field name="quant_faltante" />
-                        <field name="importancia" />
-                        <field name="valor_estimado" />
-                        <field name="total_estimado" />
-                        <field name="valor_pg"  />
-                    </group>
-                    <separator string="Produtos" />
-                    <field name="produto_ids">
-                        <tree editable="botton">
-                            <field name="name" />
-                            <field name="marca_id" />
-                            <field name="quantidade" />
-                            <field name="importancia" />
-                            <field name="melhor_preco" />
-                            <field name="valor_frete" />
-                            <field name="total_preco" />
-                            <field name="comprado" />
-                        </tree>
-                    </field>
+                    <notebook>
+                        <page string="Geral">
+                            <group col="4" colspan="4">
+                                <field name="comodo_id" col="4" colspan="4" required="1" />
+                                <field name="quantidade" />
+                                <field name="quant_faltante" />
+                                <field name="importancia" />
+                                <field name="valor_estimado" />
+                                <field name="total_estimado" />
+                                <field name="valor_pg"  />
+                            </group>
+                            <separator string="Buscas" />
+                            <field name="busca_ids">
+                                <tree editable="botton">
+                                    <field name="preco" />
+                                    <field name="url" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Características">
+                            <separator string="Caracteristicas" />
+                            <field name="caracteristica_item_ids">
+                                <tree editable="botton">
+                                    <field name="name" />
+                                    <field name="parametro" />
+                                    <field name="de" />
+                                    <field name="ate" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
                 </sheet>
             </form>
         </field>

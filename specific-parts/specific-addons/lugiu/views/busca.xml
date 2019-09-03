@@ -6,7 +6,6 @@
         <field name="priority">16</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="produto_id" />
                 <field name="preco" />
                 <field name="url" />
             </tree>
@@ -21,7 +20,6 @@
             <form>
                 <sheet>
                     <group col="4" colspan="4" string="busca">
-                        <field name="produto_id" />
                         <field name="preco" />
                         <field name="url" col="4" colspan="4" />
                     </group>

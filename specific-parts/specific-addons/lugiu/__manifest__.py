@@ -19,8 +19,6 @@
         'security/ir.model.access.csv',
         'views/comodo.xml',
         'views/item.xml',
-        'views/produto.xml',
-        'views/marca.xml',
         'views/busca.xml',
         'views/menu.xml',
         'security/security.xml',

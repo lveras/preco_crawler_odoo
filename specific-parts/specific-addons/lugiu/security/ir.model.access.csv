@@ -1,12 +1,12 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 id_grupo_admin_comodo,id_grupo_admin_comodo,model_comodo,base.group_system,1,1,1,1
 id_grupo_admin_item,id_grupo_admin_item,model_item,base.group_system,1,1,1,1
-id_grupo_admin_produto,id_grupo_admin_produto,model_produto,base.group_system,1,1,1,1
+id_grupo_admin_caracteristica_item,id_grupo_admin_caracteristica_item,model_caracteristica_item,base.group_system,1,1,1,1
 id_grupo_admin_busca,id_grupo_admin_busca,model_busca,base.group_system,1,1,1,1
 id_grupo_admin_marca,id_grupo_admin_marca,model_marca,base.group_system,1,1,1,1
 
-id_nosso_grupo_comodo,id_nosso_grupo_comodo,model_comodo,base.group_system,1,1,1,1
-id_nosso_grupo_item,id_nosso_grupo_item,model_item,base.group_system,1,1,1,1
-id_nosso_grupo_produto,id_nosso_grupo_produto,model_produto,base.group_system,1,1,1,1
-id_nosso_grupo_busca,id_nosso_grupo_busca,model_busca,base.group_system,1,1,1,1
-id_nosso_grupo_marca,id_nosso_grupo_marca,model_marca,base.group_system,1,1,1,1
+id_nosso_grupo_comodo,id_nosso_grupo_comodo,model_comodo,nosso_grupo,1,1,1,1
+id_nosso_grupo_item,id_nosso_grupo_item,model_item,nosso_grupo,1,1,1,1
+id_nosso_grupo_caracteristica_item,id_nosso_grupo_caracteristica_item,model_caracteristica_item,nosso_grupo,1,1,1,1
+id_nosso_grupo_busca,id_nosso_grupo_busca,model_busca,nosso_grupo,1,1,1,1
+id_nosso_grupo_marca,id_nosso_grupo_marca,model_marca,nosso_grupo,1,1,1,1

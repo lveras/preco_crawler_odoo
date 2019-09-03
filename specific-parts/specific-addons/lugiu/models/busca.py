@@ -5,8 +5,9 @@ from odoo import models, fields, api
 class Busca(models.Model):
     _name = "busca"
 
-    produto_id = fields.Char(
-        string='Produto',
+    item_id = fields.Many2one(
+        comodel_name='item',
+        string='Item',
         requered=True,
     )
 

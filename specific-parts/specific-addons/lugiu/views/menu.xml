@@ -23,15 +23,4 @@
           parent="cadastro_menu"
           sequence="20"/>
 
-    <menuitem id="produto_sub_menu"
-          name="Produto"
-          action="produto_action"
-          parent="cadastro_menu"
-          sequence="30"/>
-
-    <menuitem id="marca_sub_menu"
-          name="Marca"
-          action="marca_action"
-          parent="cadastro_menu"
-          sequence="40"/>
 </odoo>
