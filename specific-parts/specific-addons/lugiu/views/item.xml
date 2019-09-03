@@ -51,11 +51,12 @@
     </record>
 
     <record model="ir.actions.act_window" id="item_action">
-       <field name="name">Item</field>
-       <field name="res_model">item</field>
-       <field name="view_mode">tree,form</field>
-       <field name="view_id" ref="item_view_tree"/>
-       <field name="view_ids" eval="[(5, 0, 0),
+        <field name="name">Item</field>
+        <field name="res_model">item</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'group_by':['comodo_id']}</field>
+        <field name="view_id" ref="item_view_tree"/>
+        <field name="view_ids" eval="[(5, 0, 0),
         (0, 0, {'view_mode': 'tree', 'view_id': ref('item_view_tree')}),
         (0, 0, {'view_mode': 'form', 'view_id': ref('item_view_form')})]"/>
    </record>

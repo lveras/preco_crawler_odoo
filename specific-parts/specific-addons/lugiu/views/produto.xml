@@ -50,11 +50,12 @@
     </record>
 
     <record model="ir.actions.act_window" id="produto_action">
-       <field name="name">Produto</field>
-       <field name="res_model">produto</field>
-       <field name="view_mode">tree,form</field>
-       <field name="view_id" ref="produto_view_tree"/>
-       <field name="view_ids" eval="[(5, 0, 0),
+        <field name="name">Produto</field>
+        <field name="res_model">produto</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'group_by':['item_id', 'marca_id']}</field>
+        <field name="view_id" ref="produto_view_tree"/>
+        <field name="view_ids" eval="[(5, 0, 0),
         (0, 0, {'view_mode': 'tree', 'view_id': ref('produto_view_tree')}),
         (0, 0, {'view_mode': 'form', 'view_id': ref('produto_view_form')})]"/>
    </record>
