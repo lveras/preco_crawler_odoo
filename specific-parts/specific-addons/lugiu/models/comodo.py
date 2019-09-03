@@ -16,7 +16,7 @@ class Comodo(models.Model):
         compute='_compute_indices',
     )
 
-    indispensavel_porcent = fields.Float(
+    indispensavel_porcent = fields.Integer(
         string='Indispensável',
         compute='_compute_indices',
     )
@@ -26,7 +26,7 @@ class Comodo(models.Model):
         compute='_compute_indices',
     )
 
-    bomter_porcent = fields.Float(
+    bomter_porcent = fields.Integer(
         string='Bom ter',
         compute='_compute_indices',
     )
@@ -36,7 +36,7 @@ class Comodo(models.Model):
         compute='_compute_indices',
     )
 
-    perfumaria_porcent = fields.Float(
+    perfumaria_porcent = fields.Integer(
         string='Perfumaria',
         compute='_compute_indices',
     )
@@ -46,7 +46,7 @@ class Comodo(models.Model):
         compute='_compute_indices',
     )
 
-    umdia_porcent = fields.Float(
+    umdia_porcent = fields.Integer(
         string='Talvez nunca chegue',
         compute='_compute_indices',
     )
@@ -69,7 +69,7 @@ class Comodo(models.Model):
             pg = sum(self.item_ids.filtered(
                 lambda x: x.importancia == importancia).mapped('valor_pg'))
 
-            percent = (pg * 100) / total if total else 0
+            percent = round((pg * 100) / total) if total else 0
 
             setattr(self, '{}_{}'.format(importancia, 'total'), total)
             setattr(self, '{}_{}'.format(importancia, 'pg'), percent)
