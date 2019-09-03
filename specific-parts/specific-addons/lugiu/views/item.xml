@@ -45,7 +45,12 @@
                         <tree editable="botton">
                             <field name="name" />
                             <field name="marca_id" />
+                            <field name="quantidade" />
                             <field name="importancia" />
+                            <field name="melhor_preco" />
+                            <field name="valor_frete" />
+                            <field name="total_preco" />
+                            <field name="comprado" />
                         </tree>
                     </field>
                 </sheet>
