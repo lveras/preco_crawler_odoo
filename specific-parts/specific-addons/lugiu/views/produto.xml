@@ -23,19 +23,22 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <h1 style="width:50%; float: left;">
+                        <field name="item_id" required="1" />
+                    </h1>
                     <div class="oe_button_box" name="button_box">
                         <button name="btn_comprado" type="object" class="oe_stat_button" icon="fa-gavel" style="width: 173px !important">
                             <field name="comprado" widget="boolean_button"
-                            options='{"terminology": {"string_true": "Comprado, Porra!",
-                                                      "hover_true": "Descomprar =(",
-                                                      "string_false": "Calma jovem...",
-                                                      "hover_false": "Comprou, viado?!"}}' />
+                            options='{"terminology":
+                            {"string_true": "Comprado, Porra!",
+                            "hover_true": "Cancelar compra =(",
+                            "string_false": "Calma jovem...",
+                            "hover_false": "Comprou, viado?!"}}' />
                         </button>
                     </div>
                     <group col="4" colspan="4" string="Produto">
-                        <field name="item_id" required="1" />
-                        <field name="marca_id" required="1" />
                         <field name="name" required="1" />
+                        <field name="marca_id" required="1" />
                         <field name="importancia" required="1" />
                         <field name="quantidade" attrs="{'required': [('comprado', '=', True)]}" />
                         <field name="melhor_preco" />

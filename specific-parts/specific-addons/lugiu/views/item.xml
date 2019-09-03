@@ -23,13 +23,16 @@
         <field name="priority">16</field>
         <field name="arch" type="xml">
             <form>
-                <header>
-                    <field name="state" widget="statusbar" />
-                </header>
                 <sheet>
-                    <group string="Item" col="4" colspan="4">
-                        <field name="comodo_id" required="1" />
-                        <field name="name" required="1" />
+                    <header>
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <br />
+                    <h1>
+                        <field name="name" nolabel="1" required="1" />
+                    </h1>
+                    <group col="4" colspan="4">
+                        <field name="comodo_id" col="4" colspan="4" required="1" />
                         <field name="quantidade" />
                         <field name="quant_faltante" />
                         <field name="importancia" />
