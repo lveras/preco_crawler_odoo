@@ -45,9 +45,9 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <group string="Comodo">
-                        <field name="name" required="1" />
-                    </group>
+                    <h1>
+                        <field name="name" nolabel="1" required="1" />
+                    </h1>
                     <separator string="Status" />
                     <group col="8" colspan="8">
                         <field name="indispensavel_pg" nolabel="1" widget="gauge" style="height: 100px;"
