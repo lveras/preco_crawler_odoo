@@ -9,6 +9,7 @@
                 <field name="name" />
                 <field name="item_id" />
                 <field name="marca_id" />
+                <field name="comodo_id" />
                 <field name="importancia" />
                 <field name="melhor_preco" />
                 <field name="comprado" />
@@ -24,7 +25,8 @@
             <form>
                 <sheet>
                     <h1 style="width:50%; float: left;">
-                        <field name="item_id" required="1" />
+                        <field name="comodo_id" widget="selection" /> -
+                        <field name="item_id" required="1" widget="selection" domain="[('comodo_id', '=', comodo_id)]" />
                     </h1>
                     <div class="oe_button_box" name="button_box">
                         <button name="btn_comprado" type="object" class="oe_stat_button" icon="fa-gavel" style="width: 173px !important">

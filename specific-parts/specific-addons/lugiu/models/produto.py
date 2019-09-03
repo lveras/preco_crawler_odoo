@@ -29,6 +29,10 @@ class Produto(models.Model):
         string='Item'
     )
 
+    comodo_id = fields.Many2one(
+        comodel_name='comodo',
+    )
+
     busca_ids = fields.One2many(
         comodel_name='busca',
         inverse_name='produto_id',
@@ -60,6 +64,14 @@ class Produto(models.Model):
     valor_frete = fields.Float(
         string='Valor do Frete',
     )
+
+    @api.model
+    def create(self, vals):
+        if 'comodo_id' not in vals:
+            item_id = self.env['item'].browse(vals['item_id'])
+            vals['comodo_id'] = item_id.comodo_id.id
+
+        return super(Produto, self).create(vals)
 
     @api.depends('quantidade', 'melhor_preco', 'valor_frete')
     def _compute_melhor_preco(self):
