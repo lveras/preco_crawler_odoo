@@ -70,7 +70,7 @@ class Comodo(models.Model):
             pg = sum(self.item_ids.filtered(
             lambda x: x.importancia == importancia).mapped('valor_pg'))
 
-            percent = (pg * 100) / total
+            percent = (pg * 100) / total if total else 0
 
             setattr(self, '{}_{}'.format(importancia, 'total'), total)
             setattr(self, '{}_{}'.format(importancia, 'pg'), percent)
