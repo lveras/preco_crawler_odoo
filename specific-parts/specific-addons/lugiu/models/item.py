@@ -108,8 +108,8 @@ class Item(models.Model):
                         'val': [parametro.name for parametro in
                                 categoria.parametro_ids]}
 
-            url_master = 'https://www.google.com/search?q=' + rec.name + \
-                         '&source=lnms&tbm=shop&start=0'
+            url_master = 'https://www.google.com.br/search?cr=countryBR&q=' + \
+                         rec.name + '&source=lnms&tbm=shop&start=0'
 
             categoria_list = [key for key in list(param['param'].keys())]
 
@@ -154,7 +154,7 @@ class Item(models.Model):
         display = Display(visible=0, size=(800, 600))
         display.start()
         driver = webdriver.Chrome()
-        driver.get('https://www.google.com/search?q=' + name +
+        driver.get('https://www.google.com.br/search?cr=countryBR&q=' + name +
                    '&source=lnms&tbm=shop&start=0')
 
         self.wait_element(driver=driver, by=By.XPATH,
@@ -237,8 +237,8 @@ class Item(models.Model):
 
             for e in range(len(values)):
                 try:
-                    url = 'https://www.google.com' + k[e][0].replace(
-                        '&amp;', '&')
+                    url = 'https://www.google.com.br' + k[e][0].replace(
+                        '&amp;', '&')+"&cr=countryBR"
                     d2[values[e]] = url
                 except:
                     pass
