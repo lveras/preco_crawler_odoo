@@ -11,10 +11,18 @@ class Busca(models.Model):
         requered=True,
     )
 
+    name = fields.Char(
+        string='Nome',
+    )
+
+    descricao = fields.Text(
+        string='Descrição',
+    )
+
     preco = fields.Float(
         string='Preço',
     )
 
-    url = fields.Char(
+    url = fields.Html(
         string='URL',
     )

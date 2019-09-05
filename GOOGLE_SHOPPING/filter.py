@@ -50,7 +50,10 @@ def getLeftNav(url):
 
         d[key] = values
 
-    return soup, d, d2
+    res = {'soup': soup, 'd': d, 'd2': d2}
+
+    return res
+
 
 def visu(soup):
     j1 = soup.find_all('div', {'class': 'g'})
@@ -81,43 +84,61 @@ def visu(soup):
             data['Descrição'].append('none')
 
     df = pd.DataFrame(data=data)
-    print(df)
+
+    df.reindex(columns=list(data.keys()))
+
+    return df
 
 
-def val_vl(vals, param):
-    if 'R$' in vals and '–' in vals:
-        lista = vals.replace('R$', '').replace(' ', '').replace('.', '').\
-            replace(',', '.').split('–')
+def val_vl(val, param):
+    if 'Acima' in val:
+        return False
 
-        if len(lista) > 1:
-            if float(lista[0]) >= param['de'] and \
-                    float(lista[1]) <= param['ate']:
-                return True
+    lista = val.replace('Até R$ ', '').replace('.', '').replace(',', '') \
+        if 'Até R$ ' in val else val.replace('R$', '').replace(' ', '').\
+        replace('.', '').replace(',', '.').split('–')
+
+    if isinstance(lista, list):
+        if float(lista[0]) >= param['de'] and float(lista[1]) <= param['ate']:
+            return True
+
+    elif float(lista) <= param['ate']:
+        return True
 
     return False
 
 
-def filtro_vl(d2, param):
-    fil_vl = [d2[k] for k in d2.keys() if val_vl(vals=k, param=param)]
+def filtro_vl(d, param):
+    fil_vl = [k for k in d['Preço'] if val_vl(val=k, param=param)]
 
     return fil_vl
 
 
-def val_param(val, param_key, param):
-    if param_key in val:
-        if param[param_key]['tipo'] == 'int':
-            res = int(re.findall('\d+', val)[0])
-            if param[param_key]['de'] <= res <= param[param_key]['ate']:
-                return True
-        if param[param_key]['tipo'] == 'str':
+def val_param(ref, param):
+    res = []
+    for val in ref:
+        if param['tipo'] == 'int':
+            r = int(re.findall('\d+', val)[0])
+            if param['de'] <= r <= param['ate']:
+                res.append(val)
+        if param['tipo'] == 'str':
+            if val in param['val']:
+                res.append(val)
+        if param['tipo'] == 'list':
+            for p in param['val']:
+                if p in val:
+                    res.append(val)
 
-    return False
+    return res
 
 
-def filtro_param(d2, param):
-    for p in param.keys():
-        fil_p = [d2[k] for k in d2.keys()
-                 if val_param(val=k, param_key=p, param=param)]
+def filtro_param(ref, param):
+    fil_list = []
+    for k in ref.keys():
+        for r in val_param(ref=ref[k], param=param[k]):
+            fil_list.append(r)
+
+    return fil_list
 
 
 req = 'Geladeira'
@@ -125,23 +146,47 @@ url_master = 'https://www.google.com/search?q=' + req + \
              '&source=lnms&tbm=shop&start=0'
 
 param = {'valor': {'de': 1000, 'ate': 2000},
-         'param': {
-             'litros': {'tipo': 'int', 'de': 300, 'ate': 500, 'val': ''},
-             'frost free': {'tipo': 'str', 'de': '', 'ate': '',
-                            'val': 'Frost Free'},
-             'duplex': {'tipo': 'str', 'de': '', 'ate': '',
-                        'val': 'Duplex'},
-             'inox': {'tipo': 'str', 'de': '', 'ate': '',
-                      'val': 'inox'}, }}
+         'param': {'Capacidade': {'tipo': 'int', 'de': 300, 'ate': 500},
+                   'Marca': {'tipo': 'list', 'val':
+                       ['Brastemp', 'Panasonic', 'Consul', 'Samsung']},
+                   'Recursos': {'tipo': 'list', 'val':
+                       ['Frost Free', 'Aço inox']}}}
 
-soup, d, d2 = getLeftNav(url_master)
+categoria_list = [key for key in list(param['param'].keys())]
 
-url_filtro_vls = filtro_vl(d2, param=param['valor'])
+res = getLeftNav(url_master)
 
-url_filtros = []
+filtro_vls = filtro_vl(res['d'], param=param['valor'])
+url_filtros = [res['d2'][val] for val in filtro_vls]
 
-for url in url_filtro_vls:
-    soup, d, d2 = getLeftNav(url)
-    for p in param['param']:
-        for u in filtro_param(d2=d2, param=param['param']):
-            url_filtros.append(u)
+
+def verifica_link(res1, filtros, link):
+    keys = res1['d2'].keys()
+
+    for i in keys:
+        if i.lower() in filtros.lower():
+            link = res1['d2'][i]
+
+    return link
+
+
+for url in url_filtros:
+    res = getLeftNav(url)
+    ref = {d: res['d'][d] for d in res['d'] if
+           'Limpar' not in res['d'][d][0] and d in categoria_list}
+
+    filtros = filtro_param(ref=ref, param=param['param'])
+
+    link = res['d2'][filtros[0]]
+    for filtro in filtros[1:]:
+        res1 = getLeftNav(link)
+        lista = [res1['d'][key] for key in param['param'].keys() if
+                 key in res1['d'].keys() and 'Limpar' not in res1['d'][
+                     key] and filtro in res1['d'][key]]
+        if lista:
+            link = res1['d2'][filtro]
+
+    res2 = getLeftNav(link)
+
+    df = visu(soup=res2['soup'])
+

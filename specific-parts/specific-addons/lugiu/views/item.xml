@@ -37,15 +37,18 @@
                                 <field name="quantidade" />
                                 <field name="quant_faltante" />
                                 <field name="importancia" />
-                                <field name="valor_estimado" />
                                 <field name="total_estimado" />
                                 <field name="valor_pg"  />
                             </group>
                             <separator string="Buscas" />
+                            <button name="buscar" string="Buscar" type="object" states="pesquisando" />
                             <field name="busca_ids">
                                 <tree editable="botton">
+                                    <field name="name" />
                                     <field name="preco" />
-                                    <field name="url" />
+                                    <field name="descricao" />
+                                    <field name="url" readonly="True" />
+                                    <field name="create_date" string="Data" />
                                 </tree>
                             </field>
                         </page>
@@ -53,10 +56,11 @@
                             <separator string="Caracteristicas" />
                             <field name="caracteristica_item_ids">
                                 <tree editable="botton">
-                                    <field name="name" />
-                                    <field name="parametro" />
-                                    <field name="de" />
-                                    <field name="ate" />
+                                    <field name="categoria_id" required="1" />
+                                    <field name="parametro_ids" widget="many2many_tags"
+                                           attrs="{'readonly': ['|', ('de', '!=', 0), ('ate', '!=', 0)]}" />
+                                    <field name="de" attrs="{'readonly':[('parametro_ids', '!=', [])]}" />
+                                    <field name="ate" attrs="{'readonly':[('parametro_ids', '!=', [])]}" />
                                 </tree>
                             </field>
                         </page>

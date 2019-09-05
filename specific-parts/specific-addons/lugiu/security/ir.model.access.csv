@@ -3,10 +3,12 @@ id_grupo_admin_comodo,id_grupo_admin_comodo,model_comodo,base.group_system,1,1,1
 id_grupo_admin_item,id_grupo_admin_item,model_item,base.group_system,1,1,1,1
 id_grupo_admin_caracteristica_item,id_grupo_admin_caracteristica_item,model_caracteristica_item,base.group_system,1,1,1,1
 id_grupo_admin_busca,id_grupo_admin_busca,model_busca,base.group_system,1,1,1,1
-id_grupo_admin_marca,id_grupo_admin_marca,model_marca,base.group_system,1,1,1,1
+id_grupo_admin_categoria_caracteristica,id_grupo_admin_categoria_caracteristica,model_categoria_caracteristica,base.group_system,1,1,1,1
+id_grupo_admin_parametro_caracteristica,id_grupo_admin_parametro_caracteristica,model_parametro_caracteristica,base.group_system,1,1,1,1
 
 id_nosso_grupo_comodo,id_nosso_grupo_comodo,model_comodo,nosso_grupo,1,1,1,1
 id_nosso_grupo_item,id_nosso_grupo_item,model_item,nosso_grupo,1,1,1,1
 id_nosso_grupo_caracteristica_item,id_nosso_grupo_caracteristica_item,model_caracteristica_item,nosso_grupo,1,1,1,1
 id_nosso_grupo_busca,id_nosso_grupo_busca,model_busca,nosso_grupo,1,1,1,1
-id_nosso_grupo_marca,id_nosso_grupo_marca,model_marca,nosso_grupo,1,1,1,1
+id_nosso_grupo_categoria_caracteristica,id_nosso_grupo_categoria_caracteristica,model_categoria_caracteristica,nosso_grupo,1,1,1,1
+id_nosso_grupo_parametro_caracteristica,id_nosso_grupo_parametro_caracteristica,model_parametro_caracteristica,nosso_grupo,1,1,1,1
