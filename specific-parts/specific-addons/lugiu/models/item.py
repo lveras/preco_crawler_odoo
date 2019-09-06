@@ -105,7 +105,8 @@ class Item(models.Model):
                  ('categoria_id.name', '=', 'Preço')])
 
             categoria_ids = caracteristica_ids.search(
-                [('categoria_id.name', '!=', 'Preço')])
+                [('categoria_id.name', '!=', 'Preço'),
+                 ('item_id', '=', rec.id)])
 
             param = {'valor': {'de': valor_id.de, 'ate': valor_id.ate},
                      'param': {}}
