@@ -164,18 +164,18 @@ class Item(models.Model):
                           element='//*/div[text()="PREÇO - '
                                   'DO MENOR PARA O MAIOR"]', )
 
-        try:
-            link = self.wait_element(driver=driver, element=name,
-                                     by=By.PARTIAL_LINK_TEXT).\
-                get_attribute('href')
-        except:
-            self.wait_element(driver=driver, by=By.XPATH,
-                              element='//*/div[text()="Melhor '
-                                      'correspondência"]/../div/div/div/div/a')
+        link = self.wait_element(
+            driver=driver, element=name, by=By.PARTIAL_LINK_TEXT) \
+            if self.wait_element(driver=driver, element=name,
+                                 by=By.PARTIAL_LINK_TEXT) \
+            else self.wait_element(driver=driver, by=By.XPATH,
+                                   element='//*/div[text()="Melhor correspondê'
+                                           'ncia"]/../div/div/div/div/a')
         try:
             link1 = self.wait_element(driver=driver, element='Visitar site',
-                                      by=By.PARTIAL_LINK_TEXT).get_attribute(
-                'href')
+                                      by=By.PARTIAL_LINK_TEXT).\
+                get_attribute('href')
+
             driver.get(link1)
         except:
             driver.get(link)
@@ -187,15 +187,18 @@ class Item(models.Model):
     def wait_element(self, driver, element, by, val=False,
                      click=True, tempo=20):
         wait = WebDriverWait(driver, tempo)
-        e = wait.until(EC.visibility_of_element_located((by, element)))
-        if val:
-            e.clear()
-            e.send_keys(Keys.HOME + val)
+        try:
+            e = wait.until(EC.visibility_of_element_located((by, element)))
+            if val:
+                e.clear()
+                e.send_keys(Keys.HOME + val)
 
-        if click:
-            e.click()
+            if click:
+                e.click()
 
-        return e
+            return e
+        except:
+            return False
 
     def verifica_link(self, res1, filtros, link):
         keys = res1['d2'].keys()
