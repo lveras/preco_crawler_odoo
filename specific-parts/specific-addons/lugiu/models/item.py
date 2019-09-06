@@ -37,7 +37,7 @@ class Item(models.Model):
     )
 
     necessario_buscar = fields.Boolean(
-        string='Pesquisar preços desse item?',
+        string='Pesquisar?',
         default=False,
     )
 
