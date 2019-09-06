@@ -141,15 +141,18 @@ class Item(models.Model):
                 res = self.visu(soup=res2['soup'], link=link)
 
                 for i in range(len(res)):
-                    val = res[i]
-                    val[0] = val[0].replace(' ...', '')
-                    val[3] = self.busca_site(val[0]) or val[3]
-                    data = {'item_id': self.id, 'name': val[0],
-                            'descricao': val[1], 'preco': val[2],
-                            'url': '<a href="{}" target="_blank">Link</a>'.
-                                format(val[3])}
+                    try:
+                        val = res[i]
+                        val[0] = val[0].replace(' ...', '')
+                        val[3] = self.busca_site(val[0]) or val[3]
+                        data = {'item_id': self.id, 'name': val[0],
+                                'descricao': val[1], 'preco': val[2],
+                                'url': '<a href="{}" target="_blank">Link</a>'.
+                                    format(val[3])}
 
-                    self.busca_ids.create(data)
+                        self.busca_ids.create(data)
+                    except:
+                        pass
 
     def busca_site(self, name):
         display = Display(visible=0, size=(800, 600))
@@ -175,7 +178,7 @@ class Item(models.Model):
         try:
             link1 = self.wait_element(driver=driver, element='Visitar site',
                                       by=By.PARTIAL_LINK_TEXT).\
-                get_attribute('href')
+                get_attribute('href') or link
 
             driver.get(link1)
         except:
