@@ -9,6 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from statistics import median
 
 
 IMPORTANCIA = [('indispensavel', 'Indispensável'),
@@ -35,6 +36,11 @@ class Item(models.Model):
         default='pesquisando',
     )
 
+    necessario_buscar = fields.Boolean(
+        string='Pesquisar preços desse item?',
+        default=False,
+    )
+
     comodo_id = fields.Many2one(
         comodel_name='comodo',
         string='Comodo',
@@ -45,18 +51,10 @@ class Item(models.Model):
         default=1,
     )
 
-    quant_faltante = fields.Integer(
-        string='Faltam comprar',
-    )
-
     importancia = fields.Selection(
         selection=IMPORTANCIA,
         default='indispensavel',
         string='Importância',
-    )
-
-    valor_estimado = fields.Float(
-        string='Valor estimado(und)',
     )
 
     valor_pg = fields.Float(
@@ -68,6 +66,19 @@ class Item(models.Model):
         inverse_name='item_id',
         string='Caracteristicas',
     )
+
+    valor_estimado = fields.Float(
+        string='Valor estimado(und)',
+        compute='_compute_valor_estimado',
+    )
+
+    @api.depends('caracteristica_item_ids')
+    def _compute_valor_estimado(self):
+        for rec in self:
+            preco = rec.caracteristica_item_ids.filtered(
+                lambda x: x.categoria_id.name == 'Preço')
+
+            rec.valor_estimado = median([preco.de, preco.ate])
 
     busca_ids = fields.One2many(
         comodel_name='busca',

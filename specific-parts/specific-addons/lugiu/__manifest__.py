@@ -20,6 +20,7 @@
         'views/item.xml',
         'views/busca.xml',
         'views/menu.xml',
+        'views/automacao_busca.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
     ],

@@ -27,18 +27,24 @@
                         <field name="state" widget="statusbar" clickable="True" />
                     </header>
                     <br />
+                    <label class="oe_right" for="necessario_buscar" string="Pesquisar preços desse item?" />
+                    <field class="oe_right" style="text-align:right;" name="necessario_buscar" />
                     <h1>
                         <field name="name" nolabel="1" required="1" />
                     </h1>
+                    <group col="4" colspan="4">
+                        <label for="comodo_id" string="Comodo" />
+                        <field name="comodo_id" required="1" nolabel="1" />
+                        <label for="importancia" string="Importância" />
+                        <field name="importancia" nolabel="1" />
+                    </group>
                     <notebook>
                         <page string="Geral">
                             <group col="4" colspan="4">
-                                <field name="comodo_id" col="4" colspan="4" required="1" />
                                 <field name="quantidade" />
-                                <field name="quant_faltante" />
-                                <field name="importancia" />
-                                <field name="total_estimado" />
                                 <field name="valor_pg"  />
+                                <field name="valor_estimado" />
+                                <field name="total_estimado" />
                             </group>
                             <separator string="Buscas" />
                             <button name="buscar" string="Buscar" type="object" states="pesquisando" />

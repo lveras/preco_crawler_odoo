@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="executa_buscas_scheduler" model="ir.cron">
+        <field name="name">Automacao Busca</field>
+        <field name="model_id" ref="model_automacao_busca"/>
+        <field name="state">code</field>
+        <field name="code">model.executa_buscas()</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>hours</field>
+        <field name="numbercall">-1</field>
+        <field name="doall">1</field>
+    </record>
+</odoo>
