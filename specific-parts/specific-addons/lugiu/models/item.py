@@ -89,8 +89,9 @@ class Item(models.Model):
     def buscar(self):
         for rec in self:
             caracteristica_ids = rec.caracteristica_item_ids
-            valor_id = caracteristica_ids.search([
-                ('categoria_id.name', '=', 'Preço')])
+            valor_id = caracteristica_ids.search(
+                [('item_id', '=', rec.id),
+                 ('categoria_id.name', '=', 'Preço')])
 
             categoria_ids = caracteristica_ids.search(
                 [('categoria_id.name', '!=', 'Preço')])
