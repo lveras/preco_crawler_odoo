@@ -10,15 +10,131 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from statistics import median
+from datetime import datetime
 
+import pythonwhois
+import tldextract
+import Levenshtein
+from urllib.parse import quote
+from proxy_requests import ProxyRequests
+import json
+
+
+RA_HOME = 'https://www.reclameaqui.com.br/'
+RA_SEARCH = 'https://iosearch.reclameaqui.com.br/raichu-io-site-search-v1' \
+            '/companies/search/{0}'
+RA_SHORT_NAME = 'https://iosite.reclameaqui.com.br/raichu-io-site-v1/' \
+                'company/shortname/{0}'
+RA_MARKETPLACE_RANKINGS = "https://iosearch.reclameaqui.com.br/" \
+                          "raichu-io-site-search-v1/companies/" \
+                          "marketplace-rankings/topBest/{0}?" \
+                          "index={1}&offset={2}"
+RA_COMPANY_COMPLAINS = "https://iosearch.reclameaqui.com.br/" \
+                       "raichu-io-site-search-v1/query/companyComplains" \
+                       "/{1}/{2}?company={0}"
+RA_COMPLAIN_PUBLIC = "https://iosite.reclameaqui.com.br/raichu-io-site-v1/" \
+                     "complain/public/{0}"
 
 IMPORTANCIA = [('indispensavel', 'Indispensável'),
                ('bomter', 'É bom ter'),
                ('perfumaria', 'Perfumaria'),
                ('umdia', 'Um dia, e talvez esse dia nunca chegue...'), ]
-
 STATE = [('pesquisando', 'Pesquisando'),
          ('comprado', 'Comprado'), ]
+
+
+class RAAbstract(object):
+
+    """
+    Abstração das funções básicas para o Crawler
+    """
+
+    __user_agent = None
+    from proxy_requests import ProxyRequests
+    import json
+
+    def get(self, url):
+        headers = {"User-Agent": self.user_agent}
+
+        req = self.ProxyRequests(url)
+        req.set_headers(headers)
+        req.get_with_headers()
+
+        return self.json.loads(req.get_raw().decode())
+
+    @property
+    def user_agent(self) -> str:
+        from fake_useragent import UserAgent
+
+        if self.__user_agent is None:
+            self.__user_agent = UserAgent().random
+
+        return self.__user_agent
+
+
+class RASearch(RAAbstract):
+    """
+    Instância para buscar termos no Reclame Aqui
+    """
+
+    __response = None
+
+    def __init__(self, query: str):
+        """
+        Na inicialização é realizada a requisição com as headers, e obtendo
+        a resposta JSON da mesma para permitir as demais propriedades.
+        :param query:
+        """
+        headers = {"User-Agent": self.user_agent}
+
+        req = ProxyRequests(RA_SEARCH.format(quote(query.encode("utf-8"))))
+        req.set_headers(headers)
+        req.get_with_headers()
+
+        self.__response = json.loads(req.get_raw().decode())
+
+    @property
+    def companies(self):
+        """
+        Lista de empresas encontradas
+        :return:
+        """
+        data = self.__response
+        for company in data.get("companies", []):
+            yield self.__fix_company(company)
+
+    def __fix_company(self, data: dict):
+        """
+        Corrige o dict da empresa
+        :param data:
+        :return:
+        """
+        def fix_company_index(index: str):
+            """
+            O index da empresa vem como texto no padrão:
+            (chave=valor, chave=valor)
+            é necessário que estes valores sejam separados
+            e transformados em dict
+
+            :param index:
+            :return:
+            """
+
+            data = {}
+            index = index[1:-1]
+            indexes = index.split(",")
+
+            for indx in indexes:
+                indx = str(indx).strip()
+                vals = indx.split("=")
+                data[vals[0]] = vals[1]
+
+            return data
+
+        data["companyIndex6Months"] = fix_company_index(
+            data.get("companyIndex6Months", ""))
+
+        return data
 
 
 class Item(models.Model):
@@ -157,14 +273,49 @@ class Item(models.Model):
                         val = res[i]
                         val[0] = val[0].replace(' ...', '')
                         val[3] = self.busca_site(val[0]) or val[3]
+
+                        conf = 'vai_fundo' if self.reclame_aqui(
+                            url=val[3]) >= 2 else 'estranho'
+
                         data = {'item_id': self.id, 'name': val[0],
                                 'descricao': val[1], 'preco': val[2],
-                                'url': '<a href="{}" target="_blank">Link</a>'.
-                                    format(val[3])}
+                                'url': '<a href="{}" target="_blank">Link'
+                                       '</a>'.format(val[3]),
+                                'confianca': conf}
 
                         self.busca_ids.create(data)
                     except:
                         pass
+
+    def check_confianca(self, url):
+        confianca = 0
+        domain = tldextract.extract(url)
+
+        try:
+            w = pythonwhois.get_whois('.'.join([domain.domain, domain.suffix]))
+            existencia = ((datetime.now() - w['creation_date'][0]).days / 360)\
+                if 'creation_date' in w else 0
+            confianca = confianca+1 if existencia > 8 else confianca
+
+        except:
+            pass
+
+        try:
+            search = RASearch(query=domain.domain)
+            for company in search.companies:
+                if Levenshtein.distance(
+                        str(domain.domain).lower(),
+                        str(company['companyName']).lower()) <= 3:
+
+                    break
+
+            confianca = confianca+2 if company['companyIndex6Months']['status'] \
+                                       == 'GOOD' else confianca
+
+        except:
+            pass
+
+        return confianca
 
     def busca_site(self, name):
         display = Display(visible=0, size=(800, 600))
@@ -328,12 +479,14 @@ class Item(models.Model):
             if 'de' in param:
                 r = re.findall('\d+', val)
                 if len(r) == 2:
-                    if param['de'] <= float(r[0]) and float(r[1]) <= param[
-                        'ate']:
+                    if param['de'] <= float(r[0]) and \
+                            float(r[1]) <= param['ate']:
                         res.append(val)
+
                 elif len(r) == 1 and 'Acima' not in val:
                     if param['de'] <= float(r[0]) <= param['ate']:
                         res.append(val)
+
             else:
                 for p in param['val']:
                     if p in val:
